@@ -253,13 +253,14 @@ class ClientThread extends Thread {
                     os.writeObject("*** Bye " + clientName + " ***");
                     break;
                 case GETUSERS:
-                    os.writeObject("List of the users connected at " + sdf.format(new Date()) + "\n");
+                    os.writeObject("Connected user : time \t " + sdf.format(new Date()) + "\n");
                     // send list of active clients
                     for(ClientThread ct : threads) 
                     {
                         if((ct != this) && (ct.GetClientName() != null))
                         {
-                            os.writeObject(" @@@ " + ct.GetClientName() + " since " + ct.date + "\n");  
+                            os.writeObject("- " + ct.GetClientName() + " :\t since " + ct.date + "\n");  
+
                         }   
                     }
                     break;
@@ -267,14 +268,17 @@ class ClientThread extends Thread {
                     // send private message to mentioned username
                     String[] w = message.split(" ",2);
                     boolean privateConfirmation = false;
+                    String reseiver=w[0].substring(1, w[0].length());
+                    // msg is the rest of the message
+                    String msg = w[1];
                     for(ClientThread ct : threads) 
                     {
-                        if(ct.GetClientName().equals(w[0]))
+                        if(ct.GetClientName().equals(reseiver))
                         {
                             privateConfirmation = true;
                             if(ct != this && ct.GetClientName() != null) 
                             {
-                                ct.os.writeObject(clientName + " : " + w[1]);
+                                ct.os.writeObject(clientName + " : " + msg);
                                 break;
                             }
                         }

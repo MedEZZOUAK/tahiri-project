@@ -96,6 +96,7 @@ public class ChatClient{
                     else if(msg.contains("@")) 
                     {
                         sendMessage(new Message(MessageType.privateMessage, msg));
+                        System.out.println("private message sent");
                     }
                     else 
                     {
