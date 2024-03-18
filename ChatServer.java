@@ -288,6 +288,30 @@ class ClientThread extends Thread {
                         os.writeObject(" *** " + "Sorry. No such user exists." + " *** ");
                     }
                     break;
+                case file:
+                    // send file to mentioned username
+                    String[] w1 = message.split(" ",2);
+                    boolean fileConfirmation = false;
+                    String reseiver1=w1[0].substring(1, w1[0].length());
+                    // msg is the rest of the message
+                    String msg1 = w1[1];
+                    for(ClientThread ct : threads) 
+                    {
+                        if(ct.GetClientName().equals(reseiver1))
+                        {
+                            fileConfirmation = true;
+                            if(ct != this && ct.GetClientName() != null) 
+                            {
+                                ct.os.writeObject(clientName + " : " + msg1);
+                                break;
+                            }
+                        }
+                    }
+                    if(fileConfirmation==false)
+                    {
+                        os.writeObject(" *** " + "Sorry. No such user exists." + " *** ");
+                    }
+                    break;
 
                 }   
             }
